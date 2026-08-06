@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель — Статистика</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-section {
+            padding: 120px 0 80px;
+            min-height: 100vh;
+            background: transparent;
+            position: relative;
+        }
+        .admin-blob {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 40px auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .admin-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: var(--r-lg);
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--t-slow);
+        }
+        .admin-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0,0,0,0.15);
+        }
+        .admin-card .emoji {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .admin-card .label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+        .admin-card .count {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.02em;
+        }
+        .admin-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .btn-reset {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: var(--r-full);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--t);
+            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
+        }
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(231, 76, 60, 0.4);
+        }
+        .btn-back {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 12px 32px;
+            border-radius: var(--r-full);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--t);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        body.dark-theme .admin-card {
+            background: #4a4a4a;
+            border-color: rgba(255,255,255,0.08);
+        }
+        body.dark-theme .admin-card:hover {
+            border-color: rgba(255,255,255,0.2);
+        }
+        body.dark-theme .admin-card .label,
+        body.dark-theme .admin-card .count {
+            color: #f0f0f0;
+        }
+        body.dark-theme .btn-back {
+            background: #ffffff;
+            color: #3C3C3C;
+        }
+        body.dark-theme .btn-reset {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            .admin-section {
+                padding: 100px 0 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Logo" class="logo-img" id="logoImg" onerror="this.style.display='none'">
+                <span class="logo-text">Мила Краузе</span>
+            </a>
+            <nav class="nav" id="nav">
+                <a href="index.html#about">Обо мне</a>
+                <a href="index.html#services">Услуги</a>
+                <a href="index.html#reviews">Отзывы</a>
+                <a href="index.html#gallery">Галерея</a>
+                <a href="index.html#contact">Контакты</a>
+            </nav>
+            <div class="header-right">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <a href="index.html#contact" class="btn btn-small btn-header">Связаться</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="admin-section">
+        <div class="admin-blob"></div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Статистика</span>
+                <h1 class="section-title">Аналитика переходов</h1>
+                <p class="section-subtitle">Количество нажатий на контактные каналы</p>
+            </div>
+
+            <div class="admin-grid" id="adminGrid">
+                <!-- Карточки будут заполнены через JavaScript -->
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn-reset" id="resetBtn">Сбросить статистику</button>
+                <a href="index.html" class="btn-back">На главную</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p>© 2026 Людмила Краусе. Все права защищены.</p>
+                <div class="footer-socials">
+                    <a href="https://t.me/milakrause_neuro" target="_blank" class="footer-social" aria-label="Telegram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@mila-blogerscha-na-velike?si=p_dONf7LQTGXQcqg" target="_blank" class="footer-social" aria-label="YouTube">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function getCounters() {
+            return {
+                tg_click: parseInt(localStorage.getItem('tg_click') || '0'),
+                wa_click: parseInt(localStorage.getItem('wa_click') || '0'),
+                email_copy: parseInt(localStorage.getItem('email_copy') || '0')
+            };
+        }
+
+        function resetCounters() {
+            localStorage.removeItem('tg_click');
+            localStorage.removeItem('wa_click');
+            localStorage.removeItem('email_copy');
+            renderStats();
+        }
+
+        function renderStats() {
+            const grid = document.getElementById('adminGrid');
+            const counters = getCounters();
+            grid.innerHTML = `
+                <div class="admin-card">
+                    <span class="emoji">📱</span>
+                    <div class="label">Telegram</div>
+                    <div class="count">${counters.tg_click}</div>
+                </div>
+                <div class="admin-card">
+                    <span class="emoji">💬</span>
+                    <div class="label">WhatsApp</div>
+                    <div class="count">${counters.wa_click}</div>
+                </div>
+                <div class="admin-card">
+                    <span class="emoji">✉️</span>
+                    <div class="label">Email (копирование)</div>
+                    <div class="count">${counters.email_copy}</div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') document.body.classList.add('dark-theme');
+
+            document.getElementById('themeToggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            });
+
+            renderStats();
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('Вы уверены, что хотите сбросить всю статистику?')) {
+                    resetCounters();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
