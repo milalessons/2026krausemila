@@ -703,7 +703,7 @@ body.dark-theme .contact-video-wrapper video {
 }
 
 /* ============================================
-   СЕРТИФИКАТЫ
+   СЕРТИФИКАТЫ — единый размер с видео
    ============================================ */
 .certificates {
     padding: 100px 0;
@@ -723,11 +723,8 @@ body.dark-theme .contact-video-wrapper video {
     opacity: 0.4;
 }
 .certificates-grid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 900px;              /* как у видео */
+    margin: 40px auto 48px;        /* такие же отступы, как у видео */
     padding: 0 16px;
 }
 .certificate-item {
@@ -738,7 +735,6 @@ body.dark-theme .contact-video-wrapper video {
     background: var(--bg-surface);
     border: 1px solid rgba(0,0,0,0.08);
     width: 100%;
-    max-width: 600px;
 }
 .certificate-item:hover {
     transform: scale(1.02) translateY(-6px);
@@ -750,6 +746,26 @@ body.dark-theme .contact-video-wrapper video {
     height: auto;
     display: block;
     border-radius: inherit;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .certificates-grid {
+        padding: 0 12px;
+        margin: 28px auto 36px;
+    }
+    .certificate-item {
+        border-radius: var(--r-md);
+    }
+}
+@media (max-width: 480px) {
+    .certificates-grid {
+        padding: 0 8px;
+        margin: 22px auto 28px;
+    }
+    .certificate-item {
+        border-radius: var(--r-sm);
+    }
 }
 
 /* ============================================
