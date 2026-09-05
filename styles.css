@@ -703,7 +703,7 @@ body.dark-theme .contact-video-wrapper video {
 }
 
 /* ============================================
-   СЕРТИФИКАТЫ — единый размер с видео
+   СЕРТИФИКАТЫ — единый размер с видео, zoom при наведении
    ============================================ */
 .certificates {
     padding: 100px 0;
@@ -723,21 +723,22 @@ body.dark-theme .contact-video-wrapper video {
     opacity: 0.4;
 }
 .certificates-grid {
-    max-width: 900px;              /* как у видео */
-    margin: 40px auto 48px;        /* такие же отступы, как у видео */
+    max-width: 900px;
+    margin: 40px auto 48px;
     padding: 0 16px;
 }
 .certificate-item {
-    border-radius: var(--r-lg);
+    position: relative;
     overflow: hidden;
+    border-radius: var(--r-lg);
     box-shadow: var(--shadow-md);
-    transition: var(--t-slow);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     background: var(--bg-surface);
     border: 1px solid rgba(0,0,0,0.08);
     width: 100%;
 }
 .certificate-item:hover {
-    transform: scale(1.02) translateY(-6px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
     border-color: rgba(0,0,0,0.15);
 }
@@ -746,10 +747,32 @@ body.dark-theme .contact-video-wrapper video {
     height: auto;
     display: block;
     border-radius: inherit;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.certificate-item:hover img {
+    transform: scale(1.08);
+}
+
+/* Тёмная тема */
+body.dark-theme .certificates {
+    background: #3C3C3C;
+}
+body.dark-theme .certificates-blob {
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+body.dark-theme .certificate-item {
+    background: #4a4a4a;
+    border-color: rgba(255,255,255,0.08);
+}
+body.dark-theme .certificate-item:hover {
+    border-color: rgba(255,255,255,0.2);
 }
 
 /* Адаптив для мобильных */
 @media (max-width: 768px) {
+    .certificates {
+        padding: 72px 0;
+    }
     .certificates-grid {
         padding: 0 12px;
         margin: 28px auto 36px;
@@ -759,6 +782,9 @@ body.dark-theme .contact-video-wrapper video {
     }
 }
 @media (max-width: 480px) {
+    .certificates {
+        padding: 60px 0;
+    }
     .certificates-grid {
         padding: 0 8px;
         margin: 22px auto 28px;
