@@ -523,7 +523,7 @@ body.dark-theme .theme-toggle .moon-icon { opacity: 1; transform: scale(1); }
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     transition: var(--t-slow);
-    aspect-ratio: 2 / 3;          /* высота в 2 раза больше ширины */
+    aspect-ratio: 2 / 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -700,6 +700,56 @@ body.dark-theme .contact-video-wrapper video {
     color: var(--white);
     transform: translateY(-3px) scale(1.1);
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* ============================================
+   СЕРТИФИКАТЫ
+   ============================================ */
+.certificates {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+.certificates-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0.4;
+}
+.certificates-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+.certificate-item {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--t-slow);
+    background: var(--bg-surface);
+    border: 1px solid rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 600px;
+}
+.certificate-item:hover {
+    transform: scale(1.02) translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0,0,0,0.15);
+}
+.certificate-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: inherit;
 }
 
 /* ============================================
@@ -890,6 +940,20 @@ body.dark-theme .footer-social:hover {
     background: #ffffff;
     border-color: #ffffff;
     color: #3C3C3C;
+}
+
+body.dark-theme .certificates {
+    background: #3C3C3C;
+}
+body.dark-theme .certificates-blob {
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+body.dark-theme .certificate-item {
+    background: #4a4a4a;
+    border-color: rgba(255,255,255,0.08);
+}
+body.dark-theme .certificate-item:hover {
+    border-color: rgba(255,255,255,0.2);
 }
 
 .contact-link-email { position: relative; }
@@ -1169,7 +1233,7 @@ body.dark-theme .moreworks-empty svg {
         transform: translateX(-50%) scale(0.9);
     }
 
-    .services, .about, .gallery, .reviews, .contact {
+    .services, .about, .gallery, .reviews, .contact, .certificates {
         padding: 72px 0;
     }
     .section-header { margin-bottom: 40px; }
@@ -1312,7 +1376,6 @@ body.dark-theme .moreworks-empty svg {
         letter-spacing: 0.01em;
     }
 
-    /* Адаптив отзывов */
     .reviews-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
@@ -1475,6 +1538,15 @@ body.dark-theme .moreworks-empty svg {
         max-width: 280px;
     }
 
+    .certificates-grid {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+    .certificate-item {
+        max-width: 100%;
+        border-radius: var(--r-md);
+    }
+
     body.dark-theme .nav {
         background: rgba(50,50,50,0.98);
         border-bottom-color: rgba(255,255,255,0.06);
@@ -1492,7 +1564,8 @@ body.dark-theme .moreworks-empty svg {
     body.dark-theme .services,
     body.dark-theme .gallery,
     body.dark-theme .reviews,
-    body.dark-theme .moreworks-section {
+    body.dark-theme .moreworks-section,
+    body.dark-theme .certificates {
         background: #3C3C3C;
     }
     body.dark-theme .about,
@@ -1568,7 +1641,7 @@ body.dark-theme .moreworks-empty svg {
         max-width: 100%;
     }
 
-    .services, .about, .gallery, .reviews, .contact {
+    .services, .about, .gallery, .reviews, .contact, .certificates {
         padding: 60px 0;
     }
     .section-header { margin-bottom: 32px; }
@@ -1685,7 +1758,6 @@ body.dark-theme .moreworks-empty svg {
         font-size: 0.75rem;
     }
 
-    /* Адаптив отзывов для телефонов */
     .reviews-grid {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1818,6 +1890,13 @@ body.dark-theme .moreworks-empty svg {
     .gallery-more-btn {
         padding: 11px 24px;
         font-size: 0.85rem;
+    }
+
+    .certificates-grid {
+        padding: 0 8px;
+    }
+    .certificate-item {
+        border-radius: var(--r-sm);
     }
 }
 
